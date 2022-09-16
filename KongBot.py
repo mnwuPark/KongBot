@@ -1,6 +1,11 @@
 #Project_By mnwuPark KongBot.py
 import discord
 from discord.ext import commands
+from youtube_dl import YoutubeDL
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from discord.utils import get_slots
+from discord import FFmpegPCMAudio
 
 token = ""
 
@@ -39,5 +44,18 @@ async def leave(ctx):
 async def say(ctx, *, text):
     await ctx.send(embed = discord.Embed(title = "Say", description = text, color = 0xffffff))
 
+@bot.command
+async def play(ctx, *, url):
+    YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
+    FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+
+    if not vc.is_playing():
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download = False)
+        URL = info['formats'][0]['url']
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        await ctx.sned(embed = discord.Embed(title = "Play Music", description = "Play Music:" + url, color = 0xffffff))
+    else:
+        await ctx.send("Music has been played now !")
 
 bot.run(token)
