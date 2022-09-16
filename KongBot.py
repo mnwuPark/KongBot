@@ -26,6 +26,13 @@ async def join(ctx):
         try:
             await vc.move_to(ctx.message.author.voice.channel)
         except:
-            await ctx.send(embed = discord.Embed(title = "Kong", description = "You didn't joined any channel", color = 0x000000))
+            await ctx.send(embed = discord.Embed(title = "Kong", description = "You didn't joined any channel :(", color = 0x000000))
+
+@bot.command
+async def leave(ctx):
+    try:
+        await vc.disconnect()
+    except:
+        await ctx.send(embed = discord.Embed(title = "Kong", description = "I didn't joined any channel :(", color = 0x000000))
 
 bot.run(token)
