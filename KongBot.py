@@ -35,4 +35,9 @@ async def leave(ctx):
     except:
         await ctx.send(embed = discord.Embed(title = "Kong", description = "I didn't joined any channel :(", color = 0x000000))
 
+@bot.command
+async def say(ctx, *, text):
+    await ctx.send(embed = discord.Embed(title = "Say", description = text, color = 0xffffff))
+
+
 bot.run(token)
