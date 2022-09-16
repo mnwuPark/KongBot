@@ -4,14 +4,17 @@ from discord.ext import commands
 
 token = ""
 
-bot = commands.Bot(command_prefix = ".")
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix = ".", intents = intents)
 
 @bot.event
 async def on_ready():
     print("Login to:", bot.user.name)
     print("Bot id:", bot.user.id)
     print("Bot Connection has succesful !")
-    await bot.change_presence(status = discord.status.online, activity = None)
+    await bot.change_presence(status = discord.status.online, activity = discord.Game("Upload, Patch.."))
 
 @bot.command
 async def join(ctx):
